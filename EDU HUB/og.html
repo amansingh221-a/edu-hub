@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edu Hub - B.Tech Study & Management Portal</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* Navigation Header */
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 26px;
+      color: var(--primary);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--primary);
+      background: #eff6ff;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* User Profile & Auth Button Box */
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .user-profile-badge.admin-badge {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: var(--primary);
+    }
+
+    /* Admin Action Toolbar Banner */
+    .admin-bar {
+      background: #eff6ff;
+      border: 1px dashed var(--primary);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-bar.active {
+      display: flex;
+    }
+
+    .admin-bar-info h4 {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .admin-bar-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #1e293b;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: white;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background-color: #f1f5f9;
+    }
+
+    .btn-sm {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    /* Quick Access Card */
+    .quick-access-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .quick-access-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .quick-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .quick-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .quick-item:hover {
+      background: #f8fafc;
+    }
+
+    .quick-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .quick-info h4 {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .quick-info p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Section Component */
+    .section-header {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .search-bar {
+      margin-bottom: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .search-bar i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Grid Layouts */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .card-btn {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      background: transparent;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+    }
+
+    .card-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Announcements Section */
+    .announcements-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+
+    .announcement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .announcement-item:last-child {
+      border-bottom: none;
+    }
+
+    .bullet-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      margin-top: 6px;
+    }
+
+    .announcement-content h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .announcement-content p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* MODAL POPUP FOR DRIVE / SUBJECT DETAILS */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 750px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      animation: modalSlide 0.25s ease-out;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .modal-title-group h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .modal-title-group p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .close-modal {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-modal:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    /* Modal Navigation Tabs */
+    .modal-tabs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      background: white;
+      padding: 0 24px;
+    }
+
+    .tab-group {
+      display: flex;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* File List Row Styling */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: white;
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .file-item:hover {
+      background: #f8fafc;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .file-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .file-details h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .file-details span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 3 Dots Menu Button & Dropdown */
+    .menu-container {
+      position: relative;
+    }
+
+    .three-dots-btn {
+      background: transparent;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .three-dots-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      width: 160px;
+      display: none;
+      flex-direction: column;
+      z-index: 1050;
+      overflow: hidden;
+    }
+
+    .dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-item {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dropdown-item:hover {
+      background: #f1f5f9;
+      color: var(--primary);
+    }
+
+    .dropdown-item.delete-item:hover {
+      background: #fef2f2;
+      color: var(--danger);
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    /* Notification Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      display: flex;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: white;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-left h4 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-left p {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .footer-right {
+      text-align: right;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="brand">
+      <i class="fa-solid fa-graduation-cap brand-icon"></i>
+      <div>
+        <div class="brand-title">Edu Hub</div>
+        <span class="brand-sub">Academic Resource Portal</span>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <nav>
+        <a href="#subjects">Subjects</a>
+        <a href="#assignments">Assignments</a>
+        <a href="#updates">Updates</a>
+      </nav>
+
+      <!-- User Auth Area -->
+      <div id="authContainer">
+        <button class="btn btn-outline" style="padding: 6px 14px; font-size:13px;" onclick="openLoginModal()">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Admin Action Banner (Visible ONLY when logged in as Admin) -->
+    <div class="admin-bar" id="adminBar">
+      <div class="admin-bar-info">
+        <h4><i class="fa-solid fa-shield-halved"></i> Admin Control Active (Logged in as Aman)</h4>
+        <p>Aap naye notes upload kar sakte hain aur files delete kar sakte hain.</p>
+      </div>
+      <button class="btn btn-primary" onclick="openAddFileModal()">
+        <i class="fa-solid fa-plus"></i> Add New File
+      </button>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-left">
+        <h1 class="hero-title">Learn. Share.<br><span>Grow Together.</span></h1>
+        <p class="hero-desc">
+          Welcome to Edu Hub! Direct access to all class notes, assignments, practical codes, and exam materials.
+        </p>
+        <div class="hero-buttons">
+          <a href="#subjects" class="btn btn-primary">
+            <i class="fa-solid fa-folder-open"></i> Explore Material
+          </a>
+          <a href="#updates" class="btn btn-outline">
+            <i class="fa-regular fa-bell"></i> Updates
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Access Box -->
+      <div class="quick-access-card">
+        <div class="quick-access-header">
+          <i class="fa-solid fa-bolt" style="color: var(--primary);"></i>
+          <span>Quick Access</span>
+        </div>
+        <ul class="quick-list">
+          <li class="quick-item" onclick="openSubjectModal('AI Fundamentals', 'notes')">
+            <div class="quick-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="quick-info">
+              <h4>AI Fundamentals</h4>
+              <p>Notes & Assignments</p>
+            </div>
+          </li>
+          <li class="quick-item" onclick="openSubjectModal('C++ Programming', 'assignments')">
+            <div class="quick-icon"><i class="fa-solid fa-code"></i></div>
+            <div class="quick-info">
+              <h4>C++ Programming</h4>
+              <p>Lab Practicals & Code</p>
+            </div>
+          </li>
+          <li class="quick-item" onclick="openSubjectModal('Web Designing', 'notes')">
+            <div class="quick-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="quick-info">
+              <h4>Web Designing</h4>
+              <p>HTML, CSS & JS Files</p>
+            </div>
+          </li>
+          <li class="quick-item" onclick="openSubjectModal('Operating System', 'notes')">
+            <div class="quick-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div class="quick-info">
+              <h4>Operating Systems</h4>
+              <p>Process & Memory Notes</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 1. Explore Subjects Section -->
+    <section id="subjects">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-folder"></i> Explore Subjects</h2>
+          <p class="section-subtitle">Click on any subject card to access notes, assignments, and PYQs</p>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="subjectSearch" placeholder="Search a subject..." onkeyup="filterSubjects()" />
+      </div>
+
+      <div class="grid-3" id="subjectsGrid">
+        <div class="card" onclick="openSubjectModal('AI Fundamentals', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+            <div>
+              <div class="card-title">AI Fundamentals</div>
+              <div class="card-desc">AI concepts, search algorithms, state space & agents</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('C++ Programming', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+            <div>
+              <div class="card-title">C++ Programming</div>
+              <div class="card-desc">OOPs concepts, data structures, codes & lab files</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('Web Designing', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div>
+              <div class="card-title">Web Designing</div>
+              <div class="card-desc">HTML, CSS, JS, responsive layout and lab work</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('Environmental Studies', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
+            <div>
+              <div class="card-title">Environmental Studies</div>
+              <div class="card-desc">Unit-wise notes, ecosystem, pollution & syllabus</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('Quantum Physics', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-atom"></i></div>
+            <div>
+              <div class="card-title">Quantum Physics</div>
+              <div class="card-desc">Formulas, wave equations, numerical solved sets</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('Operating System', 'notes')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div>
+              <div class="card-title">Operating System</div>
+              <div class="card-desc">Process scheduling, deadlocks & memory management</div>
+            </div>
+          </div>
+          <button class="card-btn">Open Files <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Assignments Center Section -->
+    <section id="assignments">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-file-signature"></i> Assignments Center</h2>
+          <p class="section-subtitle">Direct access to pending and submitted assignments</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" onclick="openSubjectModal('AI Fundamentals', 'assignments')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+            <div>
+              <div class="card-title">AI Assignments</div>
+              <div class="card-desc">Search algorithms & heuristic assignment sets</div>
+            </div>
+          </div>
+          <button class="card-btn">View Assignments <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('C++ Programming', 'assignments')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-terminal"></i></div>
+            <div>
+              <div class="card-title">C++ Assignments</div>
+              <div class="card-desc">Practical problem sheets and class codes</div>
+            </div>
+          </div>
+          <button class="card-btn">View Assignments <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="card" onclick="openSubjectModal('Web Designing', 'assignments')">
+          <div class="card-top">
+            <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
+            <div>
+              <div class="card-title">Web Assignments</div>
+              <div class="card-desc">HTML forms, CSS Flexbox & JS mini-projects</div>
+            </div>
+          </div>
+          <button class="card-btn">View Assignments <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Class Updates Section -->
+    <section id="updates">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> Class Updates</h2>
+          <p class="section-subtitle">Important academic announcements</p>
+        </div>
+      </div>
+
+      <div class="announcements-card">
+        <div class="announcement-item">
+          <div class="bullet-dot"></div>
+          <div class="announcement-content">
+            <h4>Welcome to Edu Hub Portal</h4>
+            <p>Class notes and assignments are regularly updated by the admin panel.</p>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <div class="bullet-dot"></div>
+          <div class="announcement-content">
+            <h4>Mid-Semester PYQs Added</h4>
+            <p>Previous year question papers for Quantum Physics and OS have been uploaded.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- SIGN IN MODAL -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-box" style="max-width: 400px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Edu Hub Portal Sign In</h3>
+          <p>Admin / Student Portal Access</p>
+        </div>
+        <button class="close-modal" onclick="closeLoginModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="handleLoginSubmit(event)">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="loginUsername" placeholder="e.g. admin or rohit" required />
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter password" required />
+          </div>
+
+          <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">
+            <i class="fa-solid fa-circle-info"></i> <strong>Admin Hint:</strong> Username: <code>admin</code> | Password: <code>aman</code>
+          </p>
+
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button type="button" class="btn btn-outline" onclick="closeLoginModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBJECT DRIVE / FILES VIEW MODAL -->
+  <div class="modal-overlay" id="subjectModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modalSubjectTitle">Subject Name</h3>
+          <p>Edu Hub Resource & File Repository</p>
+        </div>
+        <button class="close-modal" onclick="closeSubjectModal()">&times;</button>
+      </div>
+
+      <!-- Modal Navigation Tabs -->
+      <div class="modal-tabs">
+        <div class="tab-group">
+          <button class="tab-btn active" id="tabNotesBtn" onclick="switchModalTab('notes')">
+            <i class="fa-solid fa-book-open"></i> Class Notes
+          </button>
+          <button class="tab-btn" id="tabAssignmentsBtn" onclick="switchModalTab('assignments')">
+            <i class="fa-solid fa-file-lines"></i> Assignments
+          </button>
+        </div>
+        
+        <!-- Add button inside Modal for Admin -->
+        <button class="btn btn-primary" id="adminModalAddBtn" style="display:none; padding:6px 12px; font-size:12px;" onclick="openAddFileModal()">
+          <i class="fa-solid fa-plus"></i> Add File
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="notesTabContent" class="file-list"></div>
+        <div id="assignmentsTabContent" class="file-list" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN ADD FILE MODAL -->
+  <div class="modal-overlay" id="addFileModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Add New Academic File</h3>
+          <p>Upload new PDF note or assignment to Edu Hub</p>
+        </div>
+        <button class="close-modal" onclick="closeAddFileModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addFileForm" onsubmit="handleAddFileSubmit(event)">
+          <div class="form-group">
+            <label>Select Subject</label>
+            <select id="fileSubjectSelect" required>
+              <option value="AI Fundamentals">AI Fundamentals</option>
+              <option value="C++ Programming">C++ Programming</option>
+              <option value="Web Designing">Web Designing</option>
+              <option value="Environmental Studies">Environmental Studies</option>
+              <option value="Quantum Physics">Quantum Physics</option>
+              <option value="Operating System">Operating System</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Category Type</label>
+            <select id="fileTypeSelect" required>
+              <option value="notes">Class Notes</option>
+              <option value="assignments">Assignment</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>File Title / Name</label>
+            <input type="text" id="fileNameInput" placeholder="e.g. Unit 4 - Neural Networks.pdf" required />
+          </div>
+
+          <div class="form-group">
+            <label>File Size (approx)</label>
+            <input type="text" id="fileSizeInput" placeholder="e.g. 2.5 MB" required />
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+            <button type="button" class="btn btn-outline" onclick="closeAddFileModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Upload & Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastNotification">
+    <i class="fa-solid fa-circle-check" style="color: #4ade80;"></i>
+    <span id="toastText">Action completed!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      <h4>EDU HUB PORTAL</h4>
+      <p>Learn • Share • Grow Together</p>
+    </div>
+    <div class="footer-right">
+      Maintained by <strong>Edu Hub Administrator</strong>
+    </div>
+  </footer>
+
+  <script>
+    // Global Dynamic Data Storage
+    const subjectData = {
+      'AI Fundamentals': {
+        notes: [
+          { name: 'Unit 1 - Introduction to AI & Agents.pdf', size: '2.4 MB', date: '10 Sep 2026' },
+          { name: 'Unit 2 - State Space Search & BFS/DFS.pdf', size: '3.1 MB', date: '12 Sep 2026' },
+          { name: 'Unit 3 - Heuristic Search & A* Algorithm.pdf', size: '1.8 MB', date: '14 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'First Module Assignment - Questions.pdf', size: '640 KB', date: '11 Sep 2026' },
+          { name: 'First & Second Module Hand-written Solutions.pdf', size: '4.5 MB', date: '13 Sep 2026' }
+        ]
+      },
+      'C++ Programming': {
+        notes: [
+          { name: 'OOP Concepts & Classes Handout.pdf', size: '1.9 MB', date: '05 Sep 2026' },
+          { name: 'Pointers & Dynamic Memory Management.pdf', size: '2.2 MB', date: '08 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'Lab Assignment 1 - Class Constructors.pdf', size: '320 KB', date: '07 Sep 2026' },
+          { name: 'Lab Assignment 2 - Operator Overloading.pdf', size: '450 KB', date: '12 Sep 2026' }
+        ]
+      },
+      'Web Designing': {
+        notes: [
+          { name: 'HTML5 Elements & Structure.pdf', size: '1.2 MB', date: '01 Sep 2026' },
+          { name: 'CSS3 Flexbox & Responsive Design.pdf', size: '2.8 MB', date: '04 Sep 2026' },
+          { name: 'Web Designing Full Syllabus PDF.pdf', size: '500 KB', date: '06 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'Web Lab Sheet 1 - Creating Form Page.pdf', size: '850 KB', date: '09 Sep 2026' },
+          { name: 'Mini Project Portfolio Spec.pdf', size: '1.1 MB', date: '14 Sep 2026' }
+        ]
+      },
+      'Environmental Studies': {
+        notes: [
+          { name: 'Unit 1 Ecosystem & Biodiversity.pdf', size: '3.5 MB', date: '02 Sep 2026' },
+          { name: 'Unit 2 Environmental Pollution Notes.pdf', size: '2.9 MB', date: '05 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'EVS Case Study Assignment.pdf', size: '700 KB', date: '10 Sep 2026' }
+        ]
+      },
+      'Quantum Physics': {
+        notes: [
+          { name: 'Wave Mechanics & Schrodinger Equation.pdf', size: '4.1 MB', date: '03 Sep 2026' },
+          { name: 'Quantum Physics Solved Numericals.pdf', size: '5.2 MB', date: '09 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'Physics Problem Set 1.pdf', size: '920 KB', date: '08 Sep 2026' }
+        ]
+      },
+      'Operating System': {
+        notes: [
+          { name: 'OS CPU Scheduling Algorithms.pdf', size: '2.7 MB', date: '04 Sep 2026' },
+          { name: 'Deadlock & Memory Management Notes.pdf', size: '3.4 MB', date: '11 Sep 2026' }
+        ],
+        assignments: [
+          { name: 'OS Banker Algorithm Assignment.pdf', size: '600 KB', date: '13 Sep 2026' }
+        ]
+      }
+    };
+
+    let currentOpenSubject = '';
+    let currentUser = null; // { username: '...', role: 'admin' | 'user' }
+
+    // LOGIN SYSTEM LOGIC
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.add('active');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.remove('active');
+    }
+
+    function handleLoginSubmit(event) {
+      event.preventDefault();
+      const user = document.getElementById('loginUsername').value.trim();
+      const pass = document.getElementById('loginPassword').value.trim();
+
+      // Check Admin Credentials: username 'admin' and password 'aman'
+      if (user.toLowerCase() === 'admin' && pass === 'aman') {
+        currentUser = { name: 'Aman', role: 'admin' };
+        showToast('Successfully logged in as ADMIN!');
+      } else {
+        // Any other credentials treat as Normal User (e.g., rohit)
+        currentUser = { name: user || 'Student', role: 'user' };
+        showToast(`Logged in as User: ${currentUser.name}`);
+      }
+
+      closeLoginModal();
+      updateAuthStateUI();
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      showToast('Logged out successfully');
+      updateAuthStateUI();
+    }
+
+    function updateAuthStateUI() {
+      const authContainer = document.getElementById('authContainer');
+      const adminBar = document.getElementById('adminBar');
+      const adminModalAddBtn = document.getElementById('adminModalAddBtn');
+
+      if (!currentUser) {
+        // Not logged in
+        authContainer.innerHTML = `
+          <button class="btn btn-outline" style="padding: 6px 14px; font-size:13px;" onclick="openLoginModal()">
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In
+          </button>
+        `;
+        adminBar.classList.remove('active');
+        adminModalAddBtn.style.display = 'none';
+      } else if (currentUser.role === 'admin') {
+        // Admin Logged In
+        authContainer.innerHTML = `
+          <div class="user-profile-badge admin-badge">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Admin (${currentUser.name})</span>
+            <button class="btn btn-outline btn-sm" onclick="handleLogout()" style="margin-left:4px;">Logout</button>
+          </div>
+        `;
+        adminBar.classList.add('active');
+        adminModalAddBtn.style.display = 'inline-flex';
+      } else {
+        // Normal User Logged In (e.g. Rohit)
+        authContainer.innerHTML = `
+          <div class="user-profile-badge">
+            <i class="fa-solid fa-user"></i>
+            <span>${currentUser.name}</span>
+            <button class="btn btn-outline btn-sm" onclick="handleLogout()" style="margin-left:4px;">Logout</button>
+          </div>
+        `;
+        adminBar.classList.remove('active');
+        adminModalAddBtn.style.display = 'none';
+      }
+
+      // Refresh opened subject view if modal active
+      if (currentOpenSubject) {
+        renderFileList(currentOpenSubject);
+      }
+    }
+
+    // Modal Control Functions
+    function openSubjectModal(subjectName, defaultTab = 'notes') {
+      currentOpenSubject = subjectName;
+      document.getElementById('modalSubjectTitle').innerText = subjectName;
+      renderFileList(subjectName);
+      switchModalTab(defaultTab);
+      document.getElementById('subjectModal').classList.add('active');
+    }
+
+    function closeSubjectModal() {
+      document.getElementById('subjectModal').classList.remove('active');
+      closeAllDropdowns();
+    }
+
+    function switchModalTab(tab) {
+      const notesBtn = document.getElementById('tabNotesBtn');
+      const assignmentsBtn = document.getElementById('tabAssignmentsBtn');
+      const notesContent = document.getElementById('notesTabContent');
+      const assignmentsContent = document.getElementById('assignmentsTabContent');
+
+      if (tab === 'notes') {
+        notesBtn.classList.add('active');
+        assignmentsBtn.classList.remove('active');
+        notesContent.style.display = 'flex';
+        assignmentsContent.style.display = 'none';
+      } else {
+        assignmentsBtn.classList.add('active');
+        notesBtn.classList.remove('active');
+        assignmentsContent.style.display = 'flex';
+        notesContent.style.display = 'none';
+      }
+      closeAllDropdowns();
+    }
+
+    // Render File Rows HTML dynamically
+    function renderFileList(subjectName) {
+      const data = subjectData[subjectName] || { notes: [], assignments: [] };
+      document.getElementById('notesTabContent').innerHTML = buildFilesHTML(data.notes, 'notes', subjectName);
+      document.getElementById('assignmentsTabContent').innerHTML = buildFilesHTML(data.assignments, 'assignments', subjectName);
+    }
+
+    function buildFilesHTML(files, category, subjectName) {
+      if (!files || files.length === 0) {
+        return `<p style="font-size:13px; color:var(--text-muted); text-align:center; padding:20px;">No files uploaded in this section yet.</p>`;
+      }
+
+      const isAdmin = currentUser && currentUser.role === 'admin';
+
+      return files.map((file, idx) => `
+        <div class="file-item">
+          <div class="file-info">
+            <div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <div class="file-details">
+              <h4>${file.name}</h4>
+              <span>${file.size} • Uploaded ${file.date}</span>
+            </div>
+          </div>
+
+          <div class="menu-container">
+            <button class="three-dots-btn" onclick="toggleDropdown(event, '${category}-${idx}')">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-${category}-${idx}">
+              <button class="dropdown-item" onclick="actionView('${file.name}')">
+                <i class="fa-regular fa-eye" style="color:var(--primary);"></i> View
+              </button>
+              <button class="dropdown-item" onclick="actionDownload('${file.name}')">
+                <i class="fa-solid fa-download" style="color:#16a34a;"></i> Download
+              </button>
+              <button class="dropdown-item" onclick="actionCopyLink('${file.name}')">
+                <i class="fa-solid fa-link" style="color:#d97706;"></i> Copy Link
+              </button>
+
+              ${isAdmin ? `
+                <div style="border-top:1px solid #f1f5f9; margin:4px 0;"></div>
+                <button class="dropdown-item delete-item" onclick="actionDeleteFile('${subjectName}', '${category}', ${idx})">
+                  <i class="fa-solid fa-trash" style="color:var(--danger);"></i> Delete File
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ADMIN FILE ADD & DELETE LOGIC
+    function openAddFileModal() {
+      if (!currentUser || currentUser.role !== 'admin') {
+        showToast('Only Admin (Aman) can add files!');
+        return;
+      }
+      if (currentOpenSubject) {
+        document.getElementById('fileSubjectSelect').value = currentOpenSubject;
+      }
+      document.getElementById('addFileModal').classList.add('active');
+    }
+
+    function closeAddFileModal() {
+      document.getElementById('addFileModal').classList.remove('active');
+    }
+
+    function handleAddFileSubmit(event) {
+      event.preventDefault();
+      if (!currentUser || currentUser.role !== 'admin') {
+        showToast('Unauthorized operation!');
+        return;
+      }
+
+      const subject = document.getElementById('fileSubjectSelect').value;
+      const type = document.getElementById('fileTypeSelect').value;
+      const fileName = document.getElementById('fileNameInput').value;
+      const fileSize = document.getElementById('fileSizeInput').value;
+
+      const newFileObj = {
+        name: fileName,
+        size: fileSize,
+        date: 'Today'
+      };
+
+      if (!subjectData[subject]) {
+        subjectData[subject] = { notes: [], assignments: [] };
+      }
+
+      subjectData[subject][type].push(newFileObj);
+
+      showToast(`Successfully added "${fileName}"!`);
+      closeAddFileModal();
+
+      document.getElementById('fileNameInput').value = '';
+      document.getElementById('fileSizeInput').value = '';
+
+      if (currentOpenSubject === subject) {
+        renderFileList(subject);
+      }
+    }
+
+    function actionDeleteFile(subject, category, index) {
+      if (!currentUser || currentUser.role !== 'admin') {
+        showToast('Only Admin can delete files!');
+        return;
+      }
+
+      const fileName = subjectData[subject][category][index].name;
+      if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
+        subjectData[subject][category].splice(index, 1);
+        renderFileList(subject);
+        showToast(`File deleted successfully.`);
+      }
+      closeAllDropdowns();
+    }
+
+    // Action Dropdown Helpers
+    function toggleDropdown(event, menuId) {
+      event.stopPropagation();
+      const targetMenu = document.getElementById(`dropdown-${menuId}`);
+      const isAlreadyShow = targetMenu.classList.contains('show');
+      closeAllDropdowns();
+      if (!isAlreadyShow) targetMenu.classList.add('show');
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+    }
+
+    function actionView(fileName) {
+      showToast(`Opening preview for "${fileName}"`);
+      closeAllDropdowns();
+    }
+
+    function actionDownload(fileName) {
+      showToast(`Downloading "${fileName}"...`);
+      closeAllDropdowns();
+    }
+
+    function actionCopyLink(fileName) {
+      const dummyLink = `https://eduhub.portal/drive/share?file=${encodeURIComponent(fileName)}`;
+      navigator.clipboard.writeText(dummyLink);
+      showToast(`Share link copied to clipboard!`);
+      closeAllDropdowns();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastText').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function filterSubjects() {
+      const query = document.getElementById('subjectSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('#subjectsGrid .card');
+      cards.forEach(card => {
+        const title = card.querySelector('.card-title').innerText.toLowerCase();
+        const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+        card.style.display = (title.includes(query) || desc.includes(query)) ? 'flex' : 'none';
+      });
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.menu-container')) closeAllDropdowns();
+      if (event.target === document.getElementById('subjectModal')) closeSubjectModal();
+      if (event.target === document.getElementById('addFileModal')) closeAddFileModal();
+      if (event.target === document.getElementById('loginModal')) closeLoginModal();
+      async function downloadFile(url, filename) {
+ try {
+ const response = await fetch(url);
+ const blob = await response.blob();
+ const objectUrl = window.URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = objectUrl;
+ a.download = filename;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ window.URL.revokeObjectURL(objectUrl);
+ } catch (error) {
+ console.error('Download failed:', error);
+ }
+}
+    };
+  </script>
+</body>
+</html>
